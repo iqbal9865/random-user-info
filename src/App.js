@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
 
+import './App.css';
+import FakeData from '../src/FakeData/FakeData.json'
+import UserInfo from './Components/UserInfo/UserInfo';
+import { useState } from 'react';
+import SelectedPerson from './Components/SelectedPersonInfo/SelectedPerson';
 function App() {
+  const first10 = FakeData.slice(0,15)
+  const [users,setUsers] = useState(first10)
+  const [cart, setCart] = useState([])
+ const addPerson = (user) => {
+  //  console.log('click ',name.fullName)
+    const newCart = [...cart,user];
+    setCart(newCart)
+ } 
+  // setUsers(FakeData)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="Grandinformation">
+      <div className="divOne">
+        <div className="insideDivOne">
+        {
+            users.map(user => <UserInfo user={user} key={user.id} addPerson={addPerson}></UserInfo>)
+        }
+        </div>
+      </div>
+      <div className="divTwo">
+            <SelectedPerson cart={cart}></SelectedPerson>
+      </div>
+      
     </div>
   );
 }
